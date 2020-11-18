@@ -9,9 +9,12 @@ RUN apt-get -y install --fix-missing apt-utils build-essential \
                         libzip-dev libpng-dev libjpeg-dev libxrender-dev libsodium-dev\
                         libfontconfig libc-client-dev libkrb5-dev && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install pdo_mysql mysqli bcmath soap zip gd imap sodium
+RUN docker-php-ext-install pdo_mysql mysqli bcmath soap zip gd
+
 RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl
 RUN docker-php-ext-configure gd --with-jpeg
+
+RUN docker-php-ext-install gd imap
 
 RUN pecl uninstall mongodb && pecl install mongodb && docker-php-ext-enable mongodb 
 RUN pecl uninstall protobuf && pecl install protobuf && docker-php-ext-enable protobuf 
